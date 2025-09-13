@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Search, Plus, Trash2, Upload, Download, Share2, Printer, User, Hash, Settings, Edit, Save, X, Wifi, WifiOff, Lock, Eye, EyeOff, Moon, Sun, History, Menu, List, Database, FileText, Clipboard, Heart, CheckCircle, Zap, Star, TrendingUp, Sparkles, Bell } from 'lucide-react';
 
 const HospitalBillingSystem = () => {
@@ -92,27 +92,6 @@ const HospitalBillingSystem = () => {
   };
 
   const initializeDB = useCallback(async () => {
-  // DB setup logic
-}, [])
-
-  // IndexedDB Setup
-  useEffect(() => {
-    initializeDB();
-    
-    // Listen for online/offline status
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-    
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-    
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
-  }, [initializeDB]);
-
-  const initializeDB = async () => {
     try {
       const request = indexedDB.open('HospitalBillingDB', 2);
       
@@ -153,7 +132,24 @@ const HospitalBillingSystem = () => {
       console.error('Error initializing database:', error);
       setDbStatus('error');
     }
-  };
+  }, []);
+
+  // IndexedDB Setup
+  useEffect(() => {
+    initializeDB();
+    
+    // Listen for online/offline status
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [initializeDB]);
 
   const loadServicesFromDB = async () => {
     try {
