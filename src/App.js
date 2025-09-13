@@ -91,6 +91,10 @@ const HospitalBillingSystem = () => {
     setTimeout(() => setShowFeedback({ visible: false, message: '', type: '', x: 0, y: 0 }), 3000);
   };
 
+  const initializeDB = useCallback(async () => {
+  // DB setup logic
+}, [])
+
   // IndexedDB Setup
   useEffect(() => {
     initializeDB();
