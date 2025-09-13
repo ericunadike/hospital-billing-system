@@ -106,7 +106,7 @@ const HospitalBillingSystem = () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [initializeDB]);
 
   const initializeDB = async () => {
     try {
